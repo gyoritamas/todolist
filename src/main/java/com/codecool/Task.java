@@ -5,10 +5,9 @@ public class Task {
     private final String description;
     private boolean completed;
 
-    public Task(int id, String description, boolean completed) {
+    public Task(int id, String description) {
         this.id = id;
         this.description = description;
-        this.completed = completed;
     }
 
     public int getId() {
