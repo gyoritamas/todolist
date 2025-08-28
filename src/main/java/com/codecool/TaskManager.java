@@ -23,6 +23,11 @@ public class TaskManager {
         return task;
     }
 
+    public List<Task> deleteTask(int id) {
+        tasks.removeIf(task -> task.getId() == id);
+        return tasks;
+    }
+
     private Task findById(int id) {
         for (Task task : tasks) {
             if (task.getId() == id) return task;
