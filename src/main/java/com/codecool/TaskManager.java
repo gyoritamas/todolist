@@ -12,4 +12,8 @@ public class TaskManager {
         tasks.add(task);
         return task;
     }
+
+    public List<Task> listTasks() {
+        return tasks;
+    }
 }
