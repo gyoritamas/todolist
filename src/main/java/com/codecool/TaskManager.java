@@ -17,15 +17,14 @@ public class TaskManager {
         return tasks;
     }
 
-    public Task completeTask(int id) {
+    public Task markTaskDone(int id) {
         Task task = findById(id);
         if (task != null) task.setCompleted();
         return task;
     }
 
-    public List<Task> deleteTask(int id) {
-        tasks.removeIf(task -> task.getId() == id);
-        return tasks;
+    public boolean removeTask(int id) {
+        return tasks.removeIf(task -> task.getId() == id);
     }
 
     private Task findById(int id) {
