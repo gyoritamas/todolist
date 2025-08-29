@@ -17,7 +17,7 @@ public class TaskManager {
         return tasks;
     }
 
-    public Task completeTask(int id) {
+    public Task markTaskDone(int id) {
         Task task = findById(id);
         if (task != null) task.setCompleted();
         return task;
