@@ -1,17 +1,15 @@
 package com.codecool;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static final List<String> SUBMENUS = Arrays.asList("Add task", "List tasks", "Mark task as done", "Delete task", "Exit");
     private static final TaskManager taskManager = new TaskManager();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        Menu menu = new Menu();
         while (true) {
-            displayMenu();
+            menu.display();
             switch (readUserInput()) {
                 case 1:
                     addTask();
@@ -26,7 +24,7 @@ public class Main {
                     deleteTask();
                     break;
                 case 5:
-                    System.exit(0);
+                    exit();
                     break;
                 default:
             }
@@ -77,12 +75,10 @@ public class Main {
         }
     }
 
-    private static void displayMenu() {
-        System.out.println();
-        for (int i = 0; i < SUBMENUS.size(); i++) {
-            System.out.printf("%2d. %s%n", i + 1, SUBMENUS.get(i));
-        }
-        System.out.println();
+    private static void exit() {
+        System.exit(0);
     }
+
+
 
 }
