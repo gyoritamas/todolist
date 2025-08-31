@@ -3,82 +3,37 @@ package com.codecool;
 import java.util.Scanner;
 
 public class Main {
-    private static final TaskManager taskManager = new TaskManager();
+
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         Menu menu = new Menu();
-        while (true) {
+        do {
             menu.display();
-            switch (readUserInput()) {
-                case 1:
-                    addTask();
-                    break;
-                case 2:
-                    listTasks();
-                    break;
-                case 3:
-                    markTaskDone();
-                    break;
-                case 4:
-                    deleteTask();
-                    break;
-                case 5:
-                    exit();
-                    break;
-                default:
+            String inputForMenu = readUserInput();
+            switch (inputForMenu) {
+                case "1" -> menu.addTask(readUserInput());
+                case "2" -> menu.listTasks();
+                case "3" -> menu.markTaskDone(readTaskId());
+                case "4" -> menu.deleteTask(readTaskId());
+                case "5" -> menu.exit();
+                default -> menu.displayErrorInvalidMenu(inputForMenu);
             }
-        }
+        } while (true);
     }
 
-    private static int readUserInput() {
+    private static int readTaskId() {
+        String userInput = scanner.nextLine();
         try {
-            return Integer.parseInt(scanner.nextLine());
+            return Integer.parseInt(userInput);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid submenu");
+            System.out.printf("Error: task with the ID '%s' doesn't exist%n", userInput);
             return -1;
         }
     }
 
-    private static void addTask() {
-        System.out.println("Description: ");
-        String description = scanner.nextLine();
-        taskManager.addTask(description);
+    private static String readUserInput() {
+        return scanner.nextLine();
     }
-
-    private static void listTasks() {
-        if (taskManager.listTasks().isEmpty()) {
-            System.out.println("The list is empty.");
-        } else {
-            taskManager.listTasks()
-                    .forEach(task -> System.out.printf("%-3d %-25s %s%n", task.getId(), task.getDescription(), task.isCompleted() ? "completed" : "incomplete"));
-        }
-    }
-
-    private static void markTaskDone() {
-        System.out.print("Task ID: ");
-        try {
-            int id = Integer.parseInt(scanner.nextLine());
-            taskManager.markTaskDone(id);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid ID");
-        }
-    }
-
-    private static void deleteTask() {
-        System.out.print("Task ID: ");
-        try {
-            int id = Integer.parseInt(scanner.nextLine());
-            taskManager.removeTask(id);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid ID");
-        }
-    }
-
-    private static void exit() {
-        System.exit(0);
-    }
-
-
 
 }
