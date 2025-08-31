@@ -17,7 +17,6 @@ public class Menu {
 
     public void display() {
         System.out.println();
-
         for (Map.Entry<String, String> entry : menuItems.entrySet()) {
             System.out.printf("%2s %s%n", entry.getKey(), entry.getValue());
         }
@@ -25,42 +24,40 @@ public class Menu {
     }
 
     public void addTask(String description) {
-        System.out.println("Description: ");
         taskManager.addTask(description);
     }
 
     public void listTasks() {
         if (taskManager.listTasks().isEmpty()) {
-            System.out.println("The list is empty.");
+            printErrorEmptyList();
         } else {
             taskManager.listTasks()
-                    .forEach(task -> System.out.printf("%-3d %-25s %s%n", task.getId(), task.getDescription(), task.isCompleted() ? "completed" : "incomplete"));
+                    .forEach(task -> System.out.println(task.toString()));
         }
     }
 
     public void markTaskDone(int taskId) {
-        System.out.print("Task ID: ");
-        try {
-            taskManager.markTaskDone(taskId);
-        } catch (NumberFormatException e) {
-            System.out.printf("Error: task with the ID %d doesn't exist%n", taskId);
-        }
+        if (taskManager.markTaskDone(taskId) == null || taskId == -1) printErrorInvalidId(taskId);
     }
 
     public void deleteTask(int taskId) {
-        System.out.print("Task ID: ");
-        try {
-            taskManager.removeTask(taskId);
-        } catch (NumberFormatException e) {
-            System.out.printf("Error: task with the ID %d doesn't exist%n", taskId);
-        }
+        if (!taskManager.removeTask(taskId) || taskId == -1) printErrorInvalidId(taskId);
     }
 
     public void exit() {
         System.exit(0);
     }
 
-    public void displayErrorInvalidMenu(String input) {
-        System.out.printf("Error: '%s' is not a valid menu choice. Please enter 1-%d%n", input, menuItems.size());
+    public void printErrorInvalidMenu(String input) {
+        System.out.printf("Error: '%s' is not a valid menu choice. Please enter 1-%d%n", input, Menu.menuItems.size());
+    }
+
+    private void printErrorEmptyList() {
+        System.out.println("The list is empty.");
+    }
+
+    private void printErrorInvalidId(int taskId) {
+        System.out.printf("Error: task with the ID %d doesn't exist%n", taskId);
+
     }
 }

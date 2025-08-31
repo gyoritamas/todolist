@@ -26,4 +26,8 @@ public class Task {
         this.completed = true;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%-3d %-25s %s", getId(), getDescription(), isCompleted() ? "completed" : "incomplete");
+    }
 }

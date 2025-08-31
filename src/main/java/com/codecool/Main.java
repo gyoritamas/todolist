@@ -12,12 +12,21 @@ public class Main {
             menu.display();
             String inputForMenu = readUserInput();
             switch (inputForMenu) {
-                case "1" -> menu.addTask(readUserInput());
+                case "1" -> {
+                    System.out.print("Task: ");
+                    menu.addTask(readUserInput());
+                }
                 case "2" -> menu.listTasks();
-                case "3" -> menu.markTaskDone(readTaskId());
-                case "4" -> menu.deleteTask(readTaskId());
+                case "3" -> {
+                    System.out.print("Task ID: ");
+                    menu.markTaskDone(readTaskId());
+                }
+                case "4" -> {
+                    System.out.print("Task ID: ");
+                    menu.deleteTask(readTaskId());
+                }
                 case "5" -> menu.exit();
-                default -> menu.displayErrorInvalidMenu(inputForMenu);
+                default -> menu.printErrorInvalidMenu(inputForMenu);
             }
         } while (true);
     }
